@@ -1,47 +1,28 @@
-ASM = nasm
-CC = gcc
-LD = gcc
+LD = x86_64-w64-mingw32-gcc
 
-CFLAGS = 
-ASMFLAGS = -f bin
-LDFLAGS =
+LDFLAGS = -ffreestanding -nostdlib -lgcc
 
-OBJPATH = ./obj
+LINKSCRIPT = link.ld
 
-SRCC =
-SRCASM = boot.asm
-
-OBJC = $(SRCC:%.c=$(OBJPATH)/%.o)
-OBJASM = $(SRCASM:%.asm=$(OBJPATH)/%.o)
-HEADERS = 
+SUBDIRS = boot hypervisor
 
 TARGET = boot.bin
 
-all: boot/boot.bin
+all: $(SUBDIRS) $(TARGET)
 
 run: all
-	qemu-system-i386 -hda boot/boot.bin
+	qemu-system-x86_64 -hda $(TARGET)
 
-$(OBJPATH):
-	@mkdir $@
+$(SUBDIRS):
+	$(MAKE) -C $@
 
-$(TARGET): $(OBJC) $(OBJASM)
+OBJ = $(wildcard $(addsuffix /obj/*.o,$(SUBDIRS)))
+
+$(TARGET): $(OBJ)
 	@echo "LINKING:"
-	$(LD) $(LDFLAGS) $(OBJC) $(OBJASM) -o  $@
+	$(LD) $(LDFLAGS) -T $(LINKSCRIPT) $(OBJ) -o $@
 
-$(OBJPATH)/%.o: %.c $(HEADERS)
-	@echo "COMPILING:"
-	$(CC) $(CFLAGS) $< -o $@
-
-$(OBJPATH)/%.o: %.asm
-	@echo "COMPILING:"
-	$(ASM) $(AFLAGS) $< -o $@
-
-%.bin: %.asm
-	@echo "COMPILING:"
-	$(ASM) $(AFLAGS) $< -o $@
-
-.PHONY: clean
+.PHONY: $(SUBDIRS) clean
 
 clean:
 	rm -rf $(OBJPATH)

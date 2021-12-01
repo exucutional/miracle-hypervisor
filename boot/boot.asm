@@ -1,6 +1,7 @@
 %define FREE_SPACE 0x9000
 
 BITS 16
+
 SECTION .boot.text
 global BootEntry
 ; Entry Point
@@ -89,11 +90,11 @@ BiosPrint:
 .BiosPrintLoop:
     lodsb                             ; Load the value at [@es:@si] in @al.
     test al, al                       ; If AL is the terminator character, stop printing.
-    je .BiosPrintDone                  	
+    je .BiosPrintDone                  
     mov ah, 0x0E	
     int 0x10
-    jmp .BiosPrintLoop                    ; Loop till the null character not found.
- 
+    jmp .BiosPrintLoop                ; Loop till the null character not found.
+
 .BiosPrintDone:
     popad                             ; Pop all general purpose registers to save them.
     ret

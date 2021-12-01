@@ -1,6 +1,6 @@
-LD = x86_64-w64-mingw32-gcc
+LD = x86_64-linux-gnu-gcc
 
-LDFLAGS = -ffreestanding -nostdlib -lgcc
+LDFLAGS = -ffreestanding -nostdlib -lgcc -no-pie
 
 LINKSCRIPT = link.ld
 

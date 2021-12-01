@@ -1,6 +1,6 @@
-CC = x86_64-w64-mingw32-gcc
+CC =  x86_64-linux-gnu-gcc
 
-CFLAGS = -ffreestanding -nostdlib -fno-common -fPIC -mcmodel=small -mno-red-zone -mno-mmx -mno-sse -mno-sse -Wall -Wextra -Werror -c
+CFLAGS = -ffreestanding -nostdlib -fno-common -mcmodel=small -mno-red-zone -mno-mmx -mno-sse -mno-sse -Wall -Wextra -Werror -c
 
 OBJPATH = ./obj
 

@@ -1,5 +1,7 @@
+OUTPUT_FORMAT("binary")
+/*OUTPUT_ARCH(i386:x86-64)*/
 ENTRY(BootEntry)
-KERNEL_LMA = 0x00007c00;
+KERNEL_LMA = 0x00007C00;
 KERNEL_VMA = 0xC0000000;
 SECTIONS
 {
@@ -9,7 +11,6 @@ SECTIONS
     {
         boot/obj/boot.o (.boot.text)
         *(.boot.text)
-        . = ALIGN(4096);
     }
 
     . += KERNEL_VMA;
@@ -62,6 +63,13 @@ SECTIONS
    {
        _pdata = .;
        *(.pdata)
+       . = ALIGN(4096);
+   }
+
+   .note.gnu.build-id : AT(ADDR(.note.gnu.build-id) - KERNEL_VMA)
+   {
+       _note.gnu.build-id = .;
+       *(.note.gnu.build-id)
        . = ALIGN(4096);
    }
 

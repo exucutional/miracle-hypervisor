@@ -1,6 +1,6 @@
 ASM = nasm
 
-ASMFLAGS = -f win64
+ASMFLAGS = -f elf64
 
 OBJPATH = ./obj
 

@@ -1,15 +1,15 @@
 CC =  x86_64-linux-gnu-gcc
 
-CFLAGS = -ffreestanding -nostdlib -fno-common -mcmodel=small -mno-red-zone -mno-mmx -mno-sse -mno-sse -Wall -Wextra -Werror -c
+CFLAGS = -g -ffreestanding -nostdlib -fno-common -mcmodel=small -mno-red-zone -mno-mmx -mno-sse -mno-sse -Wall -Wextra -Werror -c
 
 OBJPATH = ./obj
 
-SRCC = kernel.c
+SRCC = kernel.c serial_print.c
 
 OBJC = $(SRCC:%.c=$(OBJPATH)/%.o)
-HEADERS = 
+HEADERS = serial_print.h types.h
 
-all: $(OBJPATH) $(OBJPATH)/kernel.o
+all: $(OBJPATH) $(OBJC)
 
 $(OBJPATH):
 	@mkdir $@

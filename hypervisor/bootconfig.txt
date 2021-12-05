@@ -1,0 +1,7 @@
+// BOOTBOOT Options
+
+// --- Loader specific ---
+// requested screen dimension. If not given, autodetected
+screen=800x600
+// elf or pe binary to load inside initrd
+kernel=hypervisor.elf

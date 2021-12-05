@@ -1,0 +1,9 @@
+{
+    "diskguid": "00000000-0000-0000-0000-000000000000",
+    "disksize": 128,
+    "config": "hypervisor/bootconfig.txt",
+    "initrd": { "type": "tar", "gzip": true, "directory": "hypervisor" },
+    "partitions": [
+        { "type": "fat32", "size": 16 }
+    ]
+}

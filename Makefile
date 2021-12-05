@@ -1,28 +1,21 @@
-LD = x86_64-linux-gnu-gcc
+SUBDIRS    = bootboot/mkbootimg hypervisor
+BOOTBOOT   = bootboot/mkbootimg/mkbootimg
+BOOTCONFIG = hypervisor/bootboot.json
+TARGET     = boot.bin
+QEMUFLAGS  = -no-reboot -no-shutdown -drive format=raw
 
-LDFLAGS = -ffreestanding -nostdlib -lgcc -no-pie
+all: $(SUBDIRS) img $(TARGET)
 
-LINKSCRIPT = link.ld
+qemu: all
+	qemu-system-x86_64 $(QEMUFLAGS),file=$(TARGET)
 
-SUBDIRS = boot hypervisor
+bochs: all
+	bochs
 
-TARGET = boot.bin
-
-all: $(SUBDIRS) $(TARGET)
-
-run: all
-	qemu-system-x86_64 -hda $(TARGET)
+img:
+	$(BOOTBOOT) $(BOOTCONFIG) $(TARGET)
 
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-OBJ = $(wildcard $(addsuffix /obj/*.o,$(SUBDIRS)))
-
-$(TARGET): $(OBJ)
-	@echo "LINKING:"
-	$(LD) $(LDFLAGS) -T $(LINKSCRIPT) $(OBJ) -o $@
-
-.PHONY: $(SUBDIRS) clean
-
-clean:
-	rm -rf $(OBJPATH)
+.PHONY: all $(SUBDIRS) 

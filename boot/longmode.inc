@@ -17,6 +17,24 @@ IDT:
 ; ss:esp    Should point to memory that can be used as a small (1 uint32_t) stack
 
 SwitchToLongMode:
+    mov ax,2403h                ;--- A20-Gate Support ---
+    int 15h
+    jb a20_ns                  ;INT 15h is not supported
+    cmp ah,0
+    jnz a20_ns                  ;INT 15h is not supported
+
+    cmp al,1
+    jz a20_activated           ;A20 is already activated
+ 
+    mov ax,2401h                ;--- A20-Gate Activate ---
+    int 15h
+    jb a20_failed              ;couldn't activate the gate
+    cmp ah,0
+    jnz a20_failed              ;couldn't activate the gate
+
+a20_failed:
+a20_ns:
+a20_activated:                  ;go on
     ; Zero out the 16KiB buffer.
     ; Since we are doing a rep stosd, count should be bytes/4.   
     push di                           ; REP STOSD alters DI.

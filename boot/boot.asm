@@ -1,9 +1,10 @@
 %define FREE_SPACE 0x9000
 
 BITS 16
-
+DEFAULT REL
 SECTION .boot.text
-global BootEntry
+GLOBAL BootEntry
+EXTERN hypervisor_kernel
 ; Entry Point
 
 BootEntry:
@@ -25,8 +26,12 @@ BootEntry:
 
 BITS 64
 .Long:
+    mov rax, $hypervisor_kernel
+    jmp rax
+    cli
+.HLT:
     hlt
-    jmp .Long
+    jmp .HLT
 
 BITS 16
 

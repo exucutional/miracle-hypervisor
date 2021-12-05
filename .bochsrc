@@ -1,0 +1,7 @@
+megs: 64
+floppya: 1_44=boot.bin, status=inserted
+boot: a
+log: bochsout.txt
+logprefix: %t-%e-@%i-%d
+mouse: enabled=0
+

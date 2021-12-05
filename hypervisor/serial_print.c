@@ -12,12 +12,12 @@ void serial_print_string(BYTE* p_str, PORT port)
     int i = 0;
     while (p_str[i])
     {
-        while ((inb(port + 5) & 1) == 0);
+        while ((inb(port + 5) & 0x20) == 0);
         outb(port, p_str[i]);
         i++;
     }
     // carriage return
-    while ((inb(port + 5) & 1) == 0);
+    while ((inb(port + 5) & 0x20) == 0);
     outb(port, 0xD);
 
     return;

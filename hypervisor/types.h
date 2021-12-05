@@ -1,8 +1,9 @@
 #pragma once
 
 #define BYTE  unsigned char
+#define WORD  unsigned short int
+#define DWORD unsigned int
 #define QWORD unsigned long long
-
 #define NULL 0
 
 typedef short int           int16_t;

@@ -6,10 +6,10 @@ CFLAGS     = -g -ffreestanding -nostdlib -nostdinc -fno-common -mcmodel=small -m
 LDFLAGS    = -nostdlib -nostartfiles -T link.ld
 STRIPFLAGS = -s -K mmio -K fb -K bootboot -K environment -K initstack
 OBJPATH    = ./obj
-SRCC       = kernel.c serial_print.c
+SRCC       = kernel.c serial_print.c vmx.c
 OBJC       = $(SRCC:%.c=$(OBJPATH)/%.o)
 OBJ        = $(OBJC) $(OBJPATH)/font.o
-HEADERS    = serial_print.h types.h
+HEADERS    = serial_print.h types.h vmx.h defines.h inlines.h
 TARGET     = hypervisor.elf
 DUMP       = hypervisor.txt
 

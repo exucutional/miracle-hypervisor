@@ -1,8 +1,10 @@
 void puts(char *s);
 
 #include "types.h"
-#include "serial_print.h"
 #include <bootboot.h>
+#include "defines.h"
+#include "serial_print.h"
+#include "vmx.h"
 
 /* imported virtual addresses, see linker script */
 extern BOOTBOOT bootboot;               // see bootboot.h
@@ -11,7 +13,6 @@ extern uint8_t fb;                      // linear framebuffer mapped
 
 void _start()
 {
-    serial_print_string("Test1\n", COM1);
     int x, y, s = bootboot.fb_scanline, w = bootboot.fb_width, h = bootboot.fb_height;
 
     if(s)
@@ -28,9 +29,12 @@ void _start()
         puts("Welcome to hypervisor");
     }
 
+    if (vmx_support_check())
+    {
+        DEBUG(serial_print_str("VMX mode supported on host\n", COM1));
+        vmx_init();
+    }
 
-    serial_print_string("Test2\n", COM1);
-    // hang for now
     while(1);
 }
 

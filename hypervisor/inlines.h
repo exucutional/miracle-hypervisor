@@ -16,3 +16,25 @@ static inline BYTE inb(PORT port)
                   : "Nd"(port));
     return byte;
 }
+
+static inline QWORD rdmsr(DWORD msr)
+{
+    DWORD low, high;
+    asm volatile (
+        "rdmsr"
+        : "=a"(low), "=d"(high)
+        : "c"(msr)
+    );
+    return ((QWORD)high << 32) | low;
+}
+
+static inline void wrmsr(DWORD msr, QWORD value)
+{
+    DWORD low = value & 0xFFFFFFFF;
+    DWORD high = value >> 32;
+    asm volatile (
+        "wrmsr"
+        :
+        : "c"(msr), "a"(low), "d"(high)
+    );
+}

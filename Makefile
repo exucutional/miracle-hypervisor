@@ -2,14 +2,14 @@ SUBDIRS    = bootboot/mkbootimg hypervisor
 BOOTBOOT   = bootboot/mkbootimg/mkbootimg
 BOOTCONFIG = hypervisor/bootboot.json
 TARGET     = boot.bin
-QEMUFLAGS  = -no-reboot -no-shutdown -drive format=raw
+QEMUFLAGS  = -serial stdio -enable-kvm -cpu kvm64,+vmx -drive format=raw
 
 all: $(SUBDIRS) $(TARGET)
 
-qemu:
+qemu: all
 	qemu-system-x86_64 $(QEMUFLAGS),file=$(TARGET)
 
-bochs:
+bochs: all
 	bochs
 
 $(TARGET): $(SUBDIRS)

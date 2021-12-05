@@ -1,7 +1,7 @@
 #include "serial_print.h"
 #include "inlines.h"
 
-void serial_print_string(BYTE* p_str, PORT port)
+void serial_print_str(char* p_str, PORT port)
 {
     if (p_str == NULL)
         return;
@@ -16,14 +16,11 @@ void serial_print_string(BYTE* p_str, PORT port)
         outb(port, p_str[i]);
         i++;
     }
-    // carriage return
-    while ((inb(port + 5) & 0x20) == 0);
-    outb(port, 0xD);
 
     return;
 }
 
-void serial_print_number(QWORD num, PORT port)
+void serial_print_num(QWORD num, PORT port)
 {
     for (int i = 15; i>= 0; i--)
     {
@@ -38,7 +35,5 @@ void serial_print_number(QWORD num, PORT port)
         outb(port, symbol);
     }
 
-    while ((inb(port + 5) & 0x20) == 0);
-    outb(port, 0xD);
     return;
 }

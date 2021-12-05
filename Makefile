@@ -4,15 +4,15 @@ BOOTCONFIG = hypervisor/bootboot.json
 TARGET     = boot.bin
 QEMUFLAGS  = -no-reboot -no-shutdown -drive format=raw
 
-all: $(SUBDIRS) img $(TARGET)
+all: $(SUBDIRS) $(TARGET)
 
-qemu: all
+qemu:
 	qemu-system-x86_64 $(QEMUFLAGS),file=$(TARGET)
 
-bochs: all
+bochs:
 	bochs
 
-img:
+$(TARGET): $(SUBDIRS)
 	$(BOOTBOOT) $(BOOTCONFIG) $(TARGET)
 
 $(SUBDIRS):

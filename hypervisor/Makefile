@@ -25,7 +25,7 @@ $(OBJPATH)/%.o: %.c $(HEADERS)
 $(OBJPATH)/font.o: font.psf
 	$(LD) -r -b binary -o obj/font.o font.psf
 
-$(TARGET): $(OBJ) $(HEADERS)
+$(TARGET): $(OBJ) $(HEADERS) link.ld
 	@echo "LINKING:"
 	$(LD) $(LDFLAGS) $(OBJ) -o $@
 	@echo "STRIPPING"

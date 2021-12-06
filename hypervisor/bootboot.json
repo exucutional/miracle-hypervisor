@@ -4,6 +4,6 @@
     "config": "hypervisor/bootconfig.txt",
     "initrd": { "type": "tar", "gzip": true, "directory": "hypervisor" },
     "partitions": [
-        { "type": "fat32", "size": 16 }
+        { "type": "boot", "size": 16 }
     ]
 }

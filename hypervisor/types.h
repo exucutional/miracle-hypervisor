@@ -4,8 +4,9 @@
 #define WORD  unsigned short int
 #define DWORD unsigned int
 #define QWORD unsigned long long
-#define NULL 0
+#define NULL  0
 
+typedef int                 bool;
 typedef short int           int16_t;
 typedef unsigned char       uint8_t;
 typedef unsigned short int  uint16_t;
